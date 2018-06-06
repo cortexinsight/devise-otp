@@ -20,7 +20,5 @@ group :test do
   gem 'byebug'
   gem 'shoulda'
   gem 'selenium-webdriver'
-
   gem 'minitest-reporters', '>= 0.5.0'
-
 end
