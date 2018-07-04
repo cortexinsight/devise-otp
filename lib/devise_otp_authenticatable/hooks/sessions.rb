@@ -7,7 +7,6 @@ module DeviseOtpAuthenticatable::Hooks
     # replaces Devise::SessionsController#create
     #
     def create
-
       resource = warden.authenticate!(auth_options)
 
       if resource.class.devise_modules.include?(:otp_authenticatable)
@@ -38,12 +37,8 @@ module DeviseOtpAuthenticatable::Hooks
       end
     end
 
-
     private
 
-    #
-    # resource should be challenged for otp
-    #
     def otp_challenge_required_on?(resource)
       return false unless resource.respond_to?(:otp_enabled) && resource.respond_to?(:otp_auth_secret)
       resource.otp_enabled && !is_otp_trusted_device_for?(resource)
@@ -53,11 +48,18 @@ module DeviseOtpAuthenticatable::Hooks
     # the resource -should- have otp turned on, but it isn't
     #
     def otp_mandatory_on?(resource)
+
       return true if resource.class.otp_mandatory
       return false unless resource.respond_to?(:otp_mandatory)
 
       resource.otp_mandatory && !resource.otp_enabled
     end
+
+
+
+
+
+
   end
 end
 
