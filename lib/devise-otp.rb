@@ -1,4 +1,4 @@
-require "devise-otp/version"
+require "devise/otp/version"
 
 # cherry pick active-support extensions
 #require 'active_record/connection_adapters/abstract/schema_definitions'
@@ -41,8 +41,8 @@ module Devise
   #
   #
   #
- 	mattr_accessor :otp_drift_window
- 	@@otp_drift_window = 3 # in minutes
+  mattr_accessor :otp_drift_window
+  @@otp_drift_window = 3 # in minutes
 
   #
   # if the user wants to change Otp settings,
@@ -56,10 +56,9 @@ module Devise
   # the name of the token issuer
   #
   mattr_accessor :otp_issuer
-  @@otp_issuer = Rails.application.class.parent_name
+  @@otp_issuer = 'Cortex Insight'
 
   module Otp
-
   end
 end
 

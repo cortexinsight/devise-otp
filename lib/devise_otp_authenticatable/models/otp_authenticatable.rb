@@ -36,14 +36,14 @@ module Devise::Models
     end
 
 
-    def reset_otp_credentials
+    def reset_otp_credentials(save = true)
       @time_based_otp = nil
       @recovery_otp = nil
       generate_otp_auth_secret
       reset_otp_persistence
       update_attributes!(:otp_enabled => false,
              :otp_session_challenge => nil, :otp_challenge_expires => nil,
-             :otp_recovery_counter => 0)
+             :otp_recovery_counter => 0) if save
     end
 
     def reset_otp_credentials!
@@ -121,7 +121,7 @@ module Devise::Models
 
       # should be centered around saved drift
       (-self.class.otp_drift_window..self.class.otp_drift_window).any? {|drift|
-        (time_based_otp.verify(token, Time.now.ago(30 * drift))) }
+        (time_based_otp.verify(token, at: Time.now.ago(30 * drift))) }
     end
 
     def generate_otp_persistence_seed

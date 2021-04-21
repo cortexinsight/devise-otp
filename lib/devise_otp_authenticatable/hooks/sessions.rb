@@ -3,9 +3,6 @@ module DeviseOtpAuthenticatable::Hooks
     extend ActiveSupport::Concern
     include DeviseOtpAuthenticatable::Controllers::UrlHelpers
 
-    included do
-    end
-
     #
     # replaces Devise::SessionsController#create
     #
@@ -63,3 +60,5 @@ module DeviseOtpAuthenticatable::Hooks
     end
   end
 end
+
+Devise::SessionsController.prepend(DeviseOtpAuthenticatable::Hooks::Sessions)
